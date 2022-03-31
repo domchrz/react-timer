@@ -30,7 +30,7 @@ export default function Timer({ children, task, id }) {
     setHours(currentHours < 10 ? `0${currentHours}` : `${currentHours}`);
   };
 
-  const countDown = useCallback(() => {
+  const counter = useCallback(() => {
     num.current = time;
     interval.current = setInterval(() => {
       num.current--;
@@ -43,7 +43,7 @@ export default function Timer({ children, task, id }) {
 
   useEffect(() => {
     if (!isPlaying) return;
-    countDown();
+    counter();
     return () => clearInterval(interval.current);
   }, [isPlaying, countDown]);
 
