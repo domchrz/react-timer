@@ -14,8 +14,8 @@ export default function TimeInput({ setTime, setIsPlaying, setShowInput }) {
         return parseInt(value);
       case value < 0 || value === null || value === undefined:
         return 0;
-      case value > 60:
-        return 60;
+      case value > 59:
+        return 59;
       default:
         return value;
     }

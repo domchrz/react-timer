@@ -44,7 +44,9 @@ export default function Timer({ children, task, id }) {
   useEffect(() => {
     if (!isPlaying) return;
     countDown();
-    return () => clearInterval(interval.current);
+    return () => {
+      clearInterval(interval.current)
+    };
   }, [isPlaying, countDown]);
 
   useEffect(() => {
@@ -66,6 +68,7 @@ export default function Timer({ children, task, id }) {
     setIsPlaying(false);
     clearInterval(interval.current);
     setTime(0);
+    num.current = 0;
   };
 
   const handleTimer = () => {
