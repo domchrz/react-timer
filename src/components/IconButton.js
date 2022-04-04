@@ -1,4 +1,4 @@
-import styles from './MaterialButton.module.scss'
+import styles from './IconButton.module.scss'
 
 export default function MaterialButton({ icon, handleClick }) {
   return (

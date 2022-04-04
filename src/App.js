@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.scss';
 import AddTimerForm from './components/AddTimerForm';
-import MaterialButton from './components/MaterialButton';
+import MaterialButton from './components/IconButton';
 import Timer from './components/Timer';
 
 export default function App() {

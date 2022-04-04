@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import { useCallback } from 'react';
-import MaterialButton from './MaterialButton';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import MaterialButton from './IconButton';
 import TimeInput from './TimeInput';
 import styles from './Timer.module.scss';
 
