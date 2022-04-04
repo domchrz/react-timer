@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.scss';
 import AddTimerForm from './components/AddTimerForm';
 import MaterialButton from './components/IconButton';
-import Timer from './components/Timer';
+import Timer from './components/Timer2';
 
 export default function App() {
   const [timers, setTimers] = useState([]);

@@ -33,7 +33,7 @@ export default function TimeInput({ setTime, setIsPlaying, setShowInput }) {
     const time = +hours * 3600 + +minutes * 60 + +seconds;
     if (time === 0) return;
     setTime(time);
-    setIsPlaying(true);
+    // setIsPlaying(true);
     setShowInput(false);
   };
 
