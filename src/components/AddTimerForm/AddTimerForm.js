@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './AddTimerForm.module.scss';
-import IconButton from './IconButton';
+import IconButton from '../IconButton/IconButton';
 
 export default function AddTimerForm({ addTimer }) {
   const [value, setValue] = useState('');

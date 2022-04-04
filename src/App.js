@@ -3,6 +3,7 @@ import './App.scss';
 import AddTimerForm from './components/AddTimerForm';
 import MaterialButton from './components/IconButton';
 import Timer from './components/Timer2';
+import SetTimeForm from './components/SetTimeForm/SetTimeForm';
 
 export default function App() {
   const [timers, setTimers] = useState([]);
@@ -23,6 +24,7 @@ export default function App() {
     <div className="app">
       <header>
         <AddTimerForm addTimer={addTimer} />
+        <SetTimeForm />
       </header>
       <main>
         {timers.length > 0 &&
