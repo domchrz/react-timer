@@ -1,49 +1,62 @@
-import { useRef, useCallback, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { secondsToUnits } from '../helpers/timeHelpers';
 
-const useTime = (initTime) => {
+const useTime = (initTime, toUnits = false) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(initTime);
+  const [currentTime, setCurrentTime] = useState(
+    toUnits ? secondsToUnits(initTime, true) : initTime
+  );
 
-  const time = useRef(initTime);
+  const time = useRef(null);
   const interval = useRef(null);
-  const timerInterval = useRef(null);
 
-  const resetTimer = useCallback(() => {
+  const resetTimer = () => {
     clearInterval(interval.current);
-    setCurrentTime(0);
-  }, [interval.current]);
+    setCurrentTime(toUnits ? secondsToUnits(time.current, true) : time.current);
+  };
 
-  const stopTimer = useCallback(() => {
+  const pauseTimer = () => {
     clearInterval(interval.current);
-  }, [interval.current]);
+  };
+
+  const playInterval = () => {
+    return (interval.current = setInterval(() => {
+      time.current--;
+      setCurrentTime(
+        toUnits ? secondsToUnits(time.current, true) : time.current
+      );
+      if (time.current === 0) {
+        resetTimer();
+      }
+    }, 1000));
+  };
 
   useEffect(() => {
     time.current = initTime;
-    timerInterval.current = () => {
-      interval.current = setInterval(() => {
-        time.current--;
-        setCurrentTime(time.current);
-        if (time.current === 0) {
-          resetTimer();
-        }
-      }, 1000);
-    };
+    setCurrentTime(toUnits ? secondsToUnits(time.current, true) : time.current);
   }, [initTime]);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || time.current === 0) {
+      setIsPlaying(false);
+      return;
+    }
 
-    timerInterval.current();
+    playInterval();
 
-    if (initTime) {
-      return stopTimer;
+    if (time.current > 0) {
+      return pauseTimer;
     } else {
       return resetTimer;
     }
   }, [isPlaying]);
 
-
-  return { resetTimer, setIsPlaying, currentTime, isPlaying };
+  return {
+    resetTimer,
+    setIsPlaying,
+    currentTime,
+    isPlaying,
+  };
 };
 
 export default useTime;

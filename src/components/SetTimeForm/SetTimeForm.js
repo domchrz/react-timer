@@ -1,72 +1,50 @@
-import styles from './TimeInput.module.scss';
+import styles from './SetTimeForm.module.scss';
 import { useReducer } from 'react';
 import TimeInput from '../TimeInput/TimeInput';
+import { unitsToSeconds } from '../../helpers/timeHelpers';
+import timeFormReducer from '../../reducers/timeFormReducer';
+import Button from '../Button/Button';
 
-const inputReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_HOURS':
-      return { ...state, hours: action.payload };
-    case 'SET_MINUTES':
-      return { ...state, minutes: action.payload };
-    case 'SET_SECONDS':
-      return { ...state, seconds: action.payload };
-    case 'RESET_VALUES': {
-      return { ...state, ...action.payload };
-    }
-    default:
-      return state;
-  }
-}
-
-export default function SetTimeForm() {
-  const [inputValues, dispatch] = useReducer(inputReducer, {
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+export default function SetTimeForm({ setInitTime, setShowInput }) {
+  const [inputValues, dispatch] = useReducer(timeFormReducer, {
+    hours: '00',
+    minutes: '00',
+    seconds: '00',
   });
 
   const setInputHandler = (type) => {
     return (payload) => dispatch({ type, payload });
   };
 
-  const setInputValue = (value) => {
-    switch (true) {
-      case value > 10:
-        return value.toString();
-      case value < 10:
-        return `0${value}`;
-      default:
-        return '00';
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputValues);
-    dispatch({
-      type: 'RESET_VALUES',
-      payload: { hours: 0, minutes: 0, seconds: 0 },
-    });
+    setInitTime(unitsToSeconds(inputValues));
+    setShowInput(false);
+    dispatch({ type: 'RESET_VALUES' });
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <TimeInput
-        title="Hours: "
-        setValue={setInputHandler('SET_HOURS')}
-        value={setInputValue(inputValues.hours)}
-      />
-      <TimeInput
-        title="Minutes: "
-        setValue={setInputHandler('SET_MINUTES')}
-        value={setInputValue(inputValues.minutes)}
-      />
-      <TimeInput
-        title="Seconds: "
-        setValue={setInputHandler('SET_SECONDS')}
-        value={setInputValue(inputValues.seconds)}
-      />
-      <button>SET</button>
+      <div>
+        <TimeInput
+          title="Hours: "
+          setValue={setInputHandler('SET_HOURS')}
+          value={inputValues.hours}
+        />
+        <TimeInput
+          title="Minutes: "
+          setValue={setInputHandler('SET_MINUTES')}
+          value={inputValues.minutes}
+        />
+        <TimeInput
+          title="Seconds: "
+          setValue={setInputHandler('SET_SECONDS')}
+          value={inputValues.seconds}
+        />
+      </div>
+      <div>
+        <Button>SET</Button>
+      </div>
     </form>
   );
 }

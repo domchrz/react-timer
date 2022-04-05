@@ -1,0 +1,20 @@
+.form {
+  margin-top: 0.5rem;
+  padding-block: 1rem;
+  width: 100%;
+  background-color: var(--bg-dark);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}

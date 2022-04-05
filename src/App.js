@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import './App.scss';
-import AddTimerForm from './components/AddTimerForm';
-import MaterialButton from './components/IconButton';
-import Timer from './components/Timer2';
-import SetTimeForm from './components/SetTimeForm/SetTimeForm';
+import AddTimerForm from './components/AddTimerForm/AddTimerForm';
+import IconButton from './components/IconButton/IconButton';
+import Timer from './components/Timer/Timer';
 
 export default function App() {
   const [timers, setTimers] = useState([]);
@@ -24,13 +23,12 @@ export default function App() {
     <div className="app">
       <header>
         <AddTimerForm addTimer={addTimer} />
-        <SetTimeForm />
       </header>
       <main>
         {timers.length > 0 &&
           timers.map((timer) => (
             <Timer key={timer.id} task={timer.task}>
-              <MaterialButton
+              <IconButton
                 icon="close"
                 handleClick={() => removeTimer(timer.id)}
               />

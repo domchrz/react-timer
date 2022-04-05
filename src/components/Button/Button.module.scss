@@ -1,13 +1,13 @@
 .btn {
   display: block;
   border-radius: var(--border-radius);
-  padding: .6em 1.5em;
+  padding: 0.6em 1.5em;
   color: var(--bg-dark);
   background-color: var(--font);
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 
   &:hover {
     background-color: var(--bg);
