@@ -16,7 +16,8 @@ export default function App() {
   };
 
   const removeTimer = (id) => {
-    setTimers((prevState) => prevState.filter((timer) => timer.id !== id));
+    return () =>
+      setTimers((prevState) => prevState.filter((timer) => timer.id !== id));
   };
 
   return (
@@ -28,10 +29,7 @@ export default function App() {
         {timers.length > 0 &&
           timers.map((timer) => (
             <Timer key={timer.id} task={timer.task}>
-              <IconButton
-                icon="close"
-                handleClick={() => removeTimer(timer.id)}
-              />
+              <IconButton icon="close" handleClick={removeTimer(timer.id)} />
             </Timer>
           ))}
       </main>

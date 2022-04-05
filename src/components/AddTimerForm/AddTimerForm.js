@@ -7,7 +7,7 @@ export default function AddTimerForm({ addTimer }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTimer(!!value.trim().length ? value : 'Timer');
+    addTimer(value.trim().length ? value : 'Timer');
     setValue('');
   };
 
