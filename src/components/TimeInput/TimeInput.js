@@ -6,12 +6,12 @@ export default function TimeInput({ title, value, setValue }) {
     <label className={styles['time-input']}>
       <span>{title}</span>
       <input
-        onChange={(e) => setValue(timeUnitToString(e.target.value))}
+        onChange={(e) => setValue(e.target.value)}
         type="number"
         min="0"
         max="59"
         step="1"
-        value={value}
+        value={timeUnitToString(value)}
       />
     </label>
   );

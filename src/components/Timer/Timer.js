@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import useTime from '../../hooks/useTime';
+import { timeUnitToString } from '../../helpers/timeHelpers';
+import useTimer from '../../hooks/useTimer';
 import IconButton from '../IconButton/IconButton';
 import SetTimeForm from '../SetTimeForm/SetTimeForm';
 import styles from './Timer.module.scss';
@@ -7,29 +8,26 @@ import styles from './Timer.module.scss';
 export default function Timer({ children, task }) {
   const [initTime, setInitTime] = useState(0);
   const [showInput, setShowInput] = useState(false);
-  const { resetTimer, setIsPlaying, isPlaying, currentTime } = useTime(
-    initTime,
-    true
-  );
+  const [timer, setTimer] = useTimer(initTime);
 
   const handlePlay = () => {
-    if (isPlaying) return;
-    setIsPlaying(true);
+    if (timer.isPlaying) return;
+    setTimer.setIsPlaying(true);
     setShowInput(false);
   };
 
   const handlePause = () => {
-    setIsPlaying(false);
+    setTimer.setIsPlaying(false);
   };
 
   const handleStop = () => {
-    setIsPlaying(false);
-    resetTimer();
+    setTimer.setIsPlaying(false);
+    setTimer.resetTimer();
     setInitTime(0);
   };
 
   const handleTimer = () => {
-    setIsPlaying(false);
+    setTimer.setIsPlaying(false);
     setShowInput((prevState) => !prevState);
   };
 
@@ -42,7 +40,9 @@ export default function Timer({ children, task }) {
         </div>
         <div className={styles.time}>
           <span>
-            {currentTime.hours}:{currentTime.minutes}:{currentTime.seconds}
+            {timeUnitToString(timer.currentTime.hours)}:
+            {timeUnitToString(timer.currentTime.minutes)}:
+            {timeUnitToString(timer.currentTime.seconds)}
           </span>
         </div>
         <div className={styles.controls}>
@@ -53,11 +53,7 @@ export default function Timer({ children, task }) {
         </div>
       </div>
       {showInput && (
-        <SetTimeForm
-          setInitTime={setInitTime}
-          setIsPlaying={setIsPlaying}
-          setShowInput={setShowInput}
-        />
+        <SetTimeForm setInitTime={setInitTime} setShowInput={setShowInput} />
       )}
     </div>
   );

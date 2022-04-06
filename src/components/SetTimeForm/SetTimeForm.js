@@ -7,9 +7,9 @@ import Button from '../Button/Button';
 
 export default function SetTimeForm({ setInitTime, setShowInput }) {
   const [inputValues, dispatch] = useReducer(timeFormReducer, {
-    hours: '00',
-    minutes: '00',
-    seconds: '00',
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   const setInputHandler = (type) => {

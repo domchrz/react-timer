@@ -7,7 +7,7 @@ const timeFormReducer = (state, action) => {
     case 'SET_SECONDS':
       return { ...state, seconds: action.payload };
     case 'RESET_VALUES': {
-      return { hours: '00', minutes: '00', seconds: '00' };
+      return { hours: 0, minutes: 0, seconds: 0 };
     }
     default:
       return state;

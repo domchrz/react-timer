@@ -11,19 +11,13 @@ export const timeUnitToString = (timeUnit) => {
 };
 
 export const unitsToSeconds = ({ hours, minutes, seconds }) => {
-  return +hours * 3600 + +minutes * 60 + +seconds;
+  return hours * 3600 + minutes * 60 + seconds;
 };
 
-export const secondsToUnits = (seconds, toString = false) => {
+export const secondsToUnits = (seconds) => {
   const timeUnits = {};
   timeUnits.hours = Math.floor(seconds / 3600);
   timeUnits.minutes = Math.floor(seconds / 60) % 60;
   timeUnits.seconds = seconds % 60;
-
-  if (toString) {
-    for (const unit in timeUnits) {
-      timeUnits[unit] = timeUnitToString(timeUnits[unit]);
-    }
-  }
   return timeUnits;
 };

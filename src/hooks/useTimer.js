@@ -1,18 +1,16 @@
 import { useRef, useEffect, useState } from 'react';
 import { secondsToUnits } from '../helpers/timeHelpers';
 
-const useTime = (initTime, toUnits = false) => {
+const useTimer = (initTime) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(
-    toUnits ? secondsToUnits(initTime, true) : initTime
-  );
+  const [currentTime, setCurrentTime] = useState(secondsToUnits(initTime));
 
   const time = useRef(null);
   const interval = useRef(null);
 
   const resetTimer = () => {
     clearInterval(interval.current);
-    setCurrentTime(toUnits ? secondsToUnits(time.current, true) : time.current);
+    setCurrentTime(secondsToUnits(time.current));
   };
 
   const pauseTimer = () => {
@@ -22,9 +20,7 @@ const useTime = (initTime, toUnits = false) => {
   const playInterval = () => {
     return (interval.current = setInterval(() => {
       time.current--;
-      setCurrentTime(
-        toUnits ? secondsToUnits(time.current, true) : time.current
-      );
+      setCurrentTime(secondsToUnits(time.current));
       if (time.current === 0) {
         resetTimer();
       }
@@ -33,7 +29,7 @@ const useTime = (initTime, toUnits = false) => {
 
   useEffect(() => {
     time.current = initTime;
-    setCurrentTime(toUnits ? secondsToUnits(time.current, true) : time.current);
+    setCurrentTime(secondsToUnits(time.current));
   }, [initTime]);
 
   useEffect(() => {
@@ -51,12 +47,16 @@ const useTime = (initTime, toUnits = false) => {
     }
   }, [isPlaying]);
 
-  return {
-    resetTimer,
-    setIsPlaying,
-    currentTime,
-    isPlaying,
-  };
+  return [
+    {
+      currentTime,
+      isPlaying,
+    },
+    {
+      resetTimer,
+      setIsPlaying,
+    },
+  ];
 };
 
-export default useTime;
+export default useTimer;
