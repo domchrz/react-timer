@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const mode =
   process.env.NODE_ENV === 'production' ? 'production' : 'development';
@@ -14,7 +15,6 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[ext]/[hash][ext]',
     clean: true,
   },
   devtool:
@@ -37,6 +37,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
     }),
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
@@ -56,14 +57,6 @@ module.exports = {
           'postcss-loader',
           'sass-loader',
         ],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.html$/i,
-        loader: 'html-loader',
       },
     ],
   },

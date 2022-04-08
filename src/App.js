@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './App.scss';
-import AddTimerForm from './components/AddTimerForm';
-import MaterialButton from './components/MaterialButton';
-import Timer from './components/Timer';
+import AddTimerForm from './components/AddTimerForm/AddTimerForm';
+import IconButton from './components/IconButton/IconButton';
+import Timer from './components/Timer/Timer';
 
 export default function App() {
   const [timers, setTimers] = useState([]);
@@ -16,7 +16,8 @@ export default function App() {
   };
 
   const removeTimer = (id) => {
-    setTimers((prevState) => prevState.filter((timer) => timer.id !== id));
+    return () =>
+      setTimers((prevState) => prevState.filter((timer) => timer.id !== id));
   };
 
   return (
@@ -28,10 +29,7 @@ export default function App() {
         {timers.length > 0 &&
           timers.map((timer) => (
             <Timer key={timer.id} task={timer.task}>
-              <MaterialButton
-                icon="close"
-                handleClick={() => removeTimer(timer.id)}
-              />
+              <IconButton icon="close" handleClick={removeTimer(timer.id)} />
             </Timer>
           ))}
       </main>
